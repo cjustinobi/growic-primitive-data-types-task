@@ -2,62 +2,22 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-contract PrimitiveDataTypesTask {
 
-    address public owner;
+contract Mapping {
 
-    mapping (address => Student) students;
+    uint balance;
 
-    struct Student {
-        address studentID;
-        string fullName;
-        uint percentage;
-        uint totalMarks;
+    mapping (address => User) users;
+
+    struct User {
+        uint bal;
     }
 
-
-    constructor() {
-        owner = msg.sender;
+    function deposit (uint256 amount) public {
+        users[msg.sender].bal += amount;
     }
 
-    function register(
-        address studentID,
-        string memory fullName,
-        uint percent,
-        uint total
-
-    ) public onlyOwner notAdded (studentID) {
-
-        students[studentID] = Student(
-            studentID,
-            fullName,
-            percent,
-            total
-        );
-    }
-
-
-    function getStudentDetails(address _studentID) public view returns (
-        address,
-        string memory,
-        uint,
-        uint
-    ) {
-        return (
-        students[_studentID].studentID,
-        students[_studentID].fullName,
-        students[_studentID].percentage,
-        students[_studentID].totalMarks
-        );
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, 'Not owner');
-        _   ;
-    }
-
-    modifier notAdded(address studentAddress) {
-        require(students[studentAddress].studentID != studentAddress, 'Student already added');
-        _   ;
+    function checkBalance() public view returns(uint) {
+        return users[msg.sender].bal;
     }
 }

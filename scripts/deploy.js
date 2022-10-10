@@ -14,13 +14,13 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const PrimitiveDataTypesTask = await hre.ethers.getContractFactory("PrimitiveDataTypesTask");
+  const Mapping = await hre.ethers.getContractFactory("Mapping");
   // const RSVP = await hre.ethers.getContractFactory("RSVP");
-  const rsvp = await PrimitiveDataTypesTask.deploy();
+  const rsvp = await Mapping.deploy();
 
   await rsvp.deployed();
-PrimitiveDataTypesTask
-  console.log("PrimitiveDataTypesTask deployed to:", rsvp.address);
+
+  console.log("Mapping deployed to:", rsvp.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
