@@ -1,63 +1,22 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
 
-pragma solidity >=0.7.0 <0.9.0;
+contract Struct {
+	struct User {
+		string name;
+		uint256 age;
+	}
 
-contract PrimitiveDataTypesTask {
+	User[] public users;
 
-    address public owner;
+	function setUserDetails(string calldata _name, uint256 _age) public {
 
-    mapping (address => Student) students;
+		users.push(User({name: _name, age: _age}));
 
-    struct Student {
-        address studentID;
-        string fullName;
-        uint percentage;
-        uint totalMarks;
-    }
+	}
 
-
-    constructor() {
-        owner = msg.sender;
-    }
-
-    function register(
-        address studentID,
-        string memory fullName,
-        uint percent,
-        uint total
-
-    ) public onlyOwner notAdded (studentID) {
-
-        students[studentID] = Student(
-            studentID,
-            fullName,
-            percent,
-            total
-        );
-    }
-
-
-    function getStudentDetails(address _studentID) public view returns (
-        address,
-        string memory,
-        uint,
-        uint
-    ) {
-        return (
-        students[_studentID].studentID,
-        students[_studentID].fullName,
-        students[_studentID].percentage,
-        students[_studentID].totalMarks
-        );
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, 'Not owner');
-        _   ;
-    }
-
-    modifier notAdded(address studentAddress) {
-        require(students[studentAddress].studentID != studentAddress, 'Student already added');
-        _   ;
-    }
+	function getUserDetail(uint _index) public view returns (string memory name, bool age) {
+		User storage user = users[_index];
+		return (user.name, user.age);
+	}
 }
